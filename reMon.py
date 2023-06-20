@@ -1,8 +1,18 @@
 import sys, time, math
-import helperFuncs as hf
 import libvirt
 from tqdm import tqdm
 from datetime import datetime
+
+def GetIntFromUser(prompt: str) -> int:
+    while True:
+        num = input(prompt)
+        try:
+            num = int(num)
+            return num
+        except ValueError:
+            # Handle the exception
+            print('Needs to be a valid interger')
+
 
 ## Connect to qemu
 con = None
@@ -22,12 +32,12 @@ for i, vm in enumerate(vms):
 
 
 
-vmInd = hf.GetIntFromUser("Choose VM to monitor: ")
+vmInd = GetIntFromUser("Choose VM to monitor: ")
 
 activeVM = vms[vmInd]
 
-interval = hf.GetIntFromUser("Interval in seconds at which data is gathered: ")
-datapoints = hf.GetIntFromUser("Data points to gather: ")
+interval = GetIntFromUser("Interval in seconds at which data is gathered: ")
+datapoints = GetIntFromUser("Data points to gather: ")
 print(f"Will gather {datapoints} data points at an interval of {interval}s.")
 
 asdasdasd = con.domainListGetStats([activeVM[0]])[0][1]
